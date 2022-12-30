@@ -9,8 +9,13 @@ import json
 # <HINT> Create a Car Make model `class CarMake(models.Model)`:
 # - Name
 # - Description
-# - Any other fields you would like to include in car make model
+class CarMake(models.Model):
+    name = models.CharField(null=False, max_length=100, default='Make')
+    description = models.CharField(max_length=500)
 # - __str__ method to print a car make object
+    def __str__(self):
+        return "Name: " + self.name
+
 
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
