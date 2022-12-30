@@ -76,17 +76,21 @@ def registration_request(request):
             user_exist = True
         except:
             # If not, simply log this is a new user
-            logger.debug("{} is new user".format(username))
+            logger.error("New user")
         # If it is a new user
         if not user_exist:
             # Create user in auth_user table
             user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
                                             password=password)
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
             # Login the user and redirect to course list page
             login(request, user)
             return redirect("djangoapp:index")
         else:
-            return render(request, 'djangoapp/registration.html', context)
+            messages.warning(request, "The user already exists.")
+            return redirect('djangoapp:registration')
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 def get_dealerships(request):
