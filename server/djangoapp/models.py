@@ -10,7 +10,7 @@ import json
 # - Name
 # - Description
 class CarMake(models.Model):
-    name = models.CharField(null=False, max_length=100, default='Make')
+    name = models.CharField(null=False, max_length=50, default='Make')
     description = models.CharField(max_length=500)
 # - __str__ method to print a car make object
     def __str__(self):
@@ -21,7 +21,7 @@ class CarMake(models.Model):
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 class CarModel(models.Model):
     id = models.IntegerField(default=1,primary_key=True)
-    name = models.CharField(null=False, max_length=100, default='Car')
+    name = models.CharField(null=False, max_length=50, default='Car')
    
     SEDAN = 'Sedan'
     SUV = 'SUV'

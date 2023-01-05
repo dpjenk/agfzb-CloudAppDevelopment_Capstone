@@ -152,7 +152,7 @@ def add_review(request, id):
 
             new_payload = {}
             new_payload["review"] = payload
-            review_post_url = "https://us-south.functions.appdomain.cloud/api/v1/web/f27b432d-2eea-4fd2-af41-af63b0ac82f0/dealership-package/get-review"
+            review_post_url = "https://us-south.functions.appdomain.cloud/api/v1/web/f27b432d-2eea-4fd2-af41-af63b0ac82f0/dealership-package/post-review"
             post_request(review_post_url, new_payload, id=id)
         return redirect("djangoapp:dealer_details", id=id)
 
