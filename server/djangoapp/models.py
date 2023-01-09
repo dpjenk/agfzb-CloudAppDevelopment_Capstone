@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.utils.timezone import now
 from django.core import serializers
@@ -40,7 +41,13 @@ class CarModel(models.Model):
         default=SEDAN
     )
     make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
-    year = models.DateField(default=now)
+    
+    YEAR_CHOICES = []
+    for r in range(1969, (datetime.datetime.now().year+1)):
+        YEAR_CHOICES.append((r, r))
+
+    year = models.IntegerField(
+        ('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
 
     def __str__(self):
         return "Name: " + self.name
