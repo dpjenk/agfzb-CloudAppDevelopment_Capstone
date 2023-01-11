@@ -14,18 +14,17 @@ import json
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
-
-
 # Create an `about` view to render a static about page
 def about(request):
     context = {}
-    return render(request, 'djangoapp/about.html', context)
+    if request.method == "GET":
+        return render(request, 'djangoapp/about.html', context)
 
 # Create a `contact` view to return a static contact page
 def contact(request):
     context = {}
-    return render(request, 'djangoapp/contact.html', context)
+    if request.method == "GET":
+        return render(request, 'djangoapp/contact.html', context)
 
 # Create a `login_request` view to handle sign in request
 def login_request(request):
@@ -43,9 +42,10 @@ def login_request(request):
             return redirect('djangoapp:index')
         else:
             # If not, return to login page again
-            return render(request, 'djangoapp/index.html', context)
+            context['message'] = "Invalid username or password"
+            return render(request, 'djangoapp/login.html', context)
     else:
-        return render(request, 'djangoapp/index.html', context)
+        return render(request, 'djangoapp/login.html', context)
 
 # Create a `logout_request` view to handle sign out request
 def logout_request(request):
@@ -114,6 +114,7 @@ def get_dealer_details(request, id):
         reviews = get_dealer_reviews_from_cf(review_url, id=id)
         print(reviews)
         context["reviews"] = reviews
+        
         return render(request, 'djangoapp/dealer_details.html', context)
 
 # Create a `add_review` view to submit a review

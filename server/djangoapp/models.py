@@ -10,18 +10,19 @@ import json
 # - Name
 # - Description
 class CarMake(models.Model):
-    name = models.CharField(null=False, max_length=50, default='Make')
-    description = models.CharField(max_length=500)
+    name = models.CharField(null=False, max_length=50)
+    description = models.CharField(null=True, max_length=500)
 # - __str__ method to print a car make object
     def __str__(self):
-        return "Name: " + self.name
+        return self.name
 
 
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 class CarModel(models.Model):
+    make = models.ForeignKey(CarMake, null=True, on_delete=models.CASCADE)
     id = models.IntegerField(default=1,primary_key=True)
-    name = models.CharField(null=False, max_length=50, default='Car')
+    name = models.CharField(null=False, max_length=50)
    
     SEDAN = 'Sedan'
     SUV = 'SUV'
@@ -40,7 +41,7 @@ class CarModel(models.Model):
         choices=CAR_TYPES,
         default=SEDAN
     )
-    make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
+    
     
     YEAR_CHOICES = []
     for r in range(1969, (datetime.datetime.now().year+1)):
@@ -50,7 +51,7 @@ class CarModel(models.Model):
         ('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
 
     def __str__(self):
-        return "Name: " + self.name
+        return self.name + ", " + str(self.year) + ", " + self.type
 
 
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
@@ -77,7 +78,7 @@ class CarDealer:
         self.zip = zip
 
     def __str__(self):
-        return "Dealer name: " + self.full_name
+        return self.full_name + ", " + self.state
 
 # <HINT> Create a plain Python class `DealerReview` to hold review data
 class DealerReview:
